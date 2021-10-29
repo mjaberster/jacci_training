@@ -1,6 +1,6 @@
 # jacci_training
 EZZ
 
-Eyad Marmasha
+Eyad Marmash
 
 Marwan Jaber
