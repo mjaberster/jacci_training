@@ -1,0 +1,7 @@
+{
+	"studentName": "Ashraf",
+	"studentAge": 18,
+	"course": "Fullstack",
+	"operation": "register",
+	"paid": true
+}
