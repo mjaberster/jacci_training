@@ -1,0 +1,30 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: xx-large;
+    color: whitesmoke;
+    background-color: black;
+}
+.course-agenda {
+    list-style: none;
+    margin: 2rem 2rem;
+    padding: 0;
+}
+
+.course-agenda h2 {
+    text-align: center;
+}
+
+.agenda-list {
+    list-style: none;
+    margin: 2rem 2rem;
+    padding: 0;
+}
+
+.agenda-list span {
+    margin: 0rem 0.2rem;
+    padding: 0.1rem;
+
+}
+
+
+

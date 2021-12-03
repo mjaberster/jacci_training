@@ -1,0 +1,31 @@
+[
+
+    {
+        "id": "item_intro",
+        "text": "Introduction"
+    },
+
+    {
+        "id": "item_agile",
+        "text": "Agile"
+    },
+
+    {
+        "id": "item_node",
+        "text": "NodeJS"
+    },
+
+    {
+        "id": "item_react",
+        "text": "ReactJS"
+    },
+
+    {
+        "id": "item_mongo",
+        "text": "MongoDB"
+    },
+    {
+        "id": "item_cloud",
+        "text": "Cloud"
+    }
+]
