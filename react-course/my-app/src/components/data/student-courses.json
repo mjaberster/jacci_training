@@ -1,0 +1,45 @@
+[
+
+    {
+        "student": {
+            "name": "John",
+            "id": "1"
+        },
+        "courses": [
+            {
+                "name": "web development",
+                "hours": 3
+            },
+            {
+                "name": "Networking",
+                "hours": 3
+            },
+            {
+                "name": "Germany",
+                "hours": 1
+            }
+        ]
+    },
+    {
+            "student": {
+                "name": "Mike",
+                "id": "2"
+            },
+            "courses": [
+                {
+                    "name": "Algorithms",
+                    "hours": 3
+                },
+                {
+                    "name": "Data structure",
+                    "hours": 3
+                },
+                {
+                    "name": "Math",
+                    "hours": 1
+                }
+            ]       
+    
+    }
+
+]

@@ -1,0 +1,13 @@
+[
+
+    {
+        "name": "John",
+        "id": "1", 
+        "course": "React.Js"
+    },
+    {
+        "name": "Mike",
+        "id": "2",
+        "course":"Node.Js"
+    }
+]

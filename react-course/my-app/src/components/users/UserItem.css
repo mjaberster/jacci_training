@@ -1,0 +1,16 @@
+.user-item {
+    color: whitesmoke;
+    border: wheat;
+    margin: 0.2rem;
+}
+.user-item span {
+    margin: 0.2rem;
+}
+
+.user-item span img {
+    width: 1rem;
+}
+
+.course-name {
+    font-weight: bold;
+}
