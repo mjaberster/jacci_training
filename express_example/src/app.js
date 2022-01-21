@@ -1,4 +1,6 @@
 const express = require('express')
+const fs = require("fs")
+
 const path = require('path')
 
 const server = express()
@@ -35,38 +37,21 @@ server.get('/about', (req, res) => {
     res.send('I\'m your about page!')
 })
 
-const students = [
 
-    {
-        name: "wajeeh",
-        department: "finance",
-        salary: 10000
-    },
-    {
-        name: "exx",
-        department: "IT",
-        salary: 12000
-    },
-    {
-        name: "diala",
-        department: "administration",
-        salary: 15000
-    }
-
-
-]
 server.get('/student', (req, res) => {
     
-    const name = req.query.name
-    const department = req.query.department
+    let fileContent = fs.readFileSync(path.join(contentPath, '../content/student.json'))
+    let students = JSON.parse(fileContent)
 
-    if(!name || !department) {
-        res.status(400).send("You must provide student name and department")
+    const name = req.query.name
+
+    if(!name) {
+        res.status(400).send("You must provide student name")
         return;
     }
 
-    const student = students.find( s => {
-        return s.name === name && s.department === department
+    const student = students.filter( s => {
+        return s.name === name
     })
 
     if(!student) {

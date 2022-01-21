@@ -1,6 +1,23 @@
 [
-{
-    "name": "ezz"
-}
+    {
+        "name": "wajeeh",
+        "department": "finance",
+        "salary": 10000
+    },
+    {
+        "name": "ezz",
+        "department": "IT",
+        "salary": 12000
+    },
+    {
+        "name": "ezz",
+        "department": "reception",
+        "salary": 2000
+    },
+    {
+        "name": "diala",
+        "department": "administration",
+        "salary": 15000
+    }
 
 ]
