@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import AgendaList from './components/agenda-list/AgendaList';
 import Home from './components/Home'
@@ -7,7 +7,15 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import MainNavigation from './components/navigation/MainNavigation';
 import UsersList from './components/users/UsersList';
 import StudentCourseList from './components/course/student-courses';
+import AuthForm from './components/auth/AuthForm';
+
+
 const App = () => {
+  const [count, setCount] = useState(0);
+    useEffect(()=>{
+        setCount(count+1)
+    }, [])
+    
   const [dataState, setAgendaItems] = useState(data);
   const AddNewItem = (item) => {
     
@@ -23,9 +31,10 @@ const App = () => {
     <Router>
         <MainNavigation />
         <main>
+        <label>{count}</label>
             <Routes>
               <Route path="/" element={<Home/>} />
-              <Route path="/courses" element={
+              <Route path="/course" element={
                 <div>
                   <AgendaList courseAgendaItems={dataState} onAddItem={AddNewItem}/>
                 </div>
@@ -38,6 +47,10 @@ const App = () => {
               <Route path="/student/:studentid" element={
                 <StudentCourseList/>
               } />
+              <Route path="/auth" element={
+                <AuthForm/>
+              } />
+            
             </Routes>
         </main>
       </Router>

@@ -1,0 +1,24 @@
+{
+  "name": "jacci_training",
+  "version": "1.0.0",
+  "description": "EZZ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjaberster/jacci_training.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjaberster/jacci_training/issues"
+  },
+  "homepage": "https://github.com/mjaberster/jacci_training#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}
