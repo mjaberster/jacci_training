@@ -8,6 +8,23 @@ const contentPath = path.join(__dirname, "../content")
 
 server.use(express.static(contentPath))
 
+server.use((req, res, next) => {
+
+    if(!req.headers.username || !req.headers.password){
+        res.status(401).send("You must login first")
+        return
+    }
+
+    const content = fs.readFileSync(path.join(contentPath, '../content/users.json'))
+    const users = JSON.parse(content)
+
+    const user = users.find(u => u.username === req.headers.username && u.password === req.headers.password)
+    if(!user) {
+        res.status(403).send(`Username or password are not correct`)
+        return
+    }
+    next()
+})
 
 server.use((req, res, next) => {
     console.log("A new request has arrived")
