@@ -1,25 +1,26 @@
-import React from "react"
+import React, {useState} from "react"
 
 const AddStudent = (props) => {
 
-    let student = {}
-
-
+    let [studentName, setStudentName] = useState("")
+    let [phoneNumber, setphonNumber] = useState("")
+ 
     const onChangeHandler = (event) => {
-        let field = event.target.name
-        let value = event.target.value
-        console.log(`adding: ${field} ${value}`)
-        student[field] = value
-        console.log(student)
+        if(event.target.name === "studentName") {
+            setStudentName(event.target.value)
+        } else if (event.target.name === "phoneNumber") {
+            setphonNumber(event.target.value)
+        }
     }
 
     const onAddClickedHandler = (event) => {
-        if(!student.phoneNumber || !student.studentName) {
+        if(!phoneNumber || !studentName) {
             let err = new Error()
             err.message = "Student name and Phone number are mandatory"
             props.onError(err)
             return
         }
+        let student = {studentName, phoneNumber}
         postData(student)
     }
 
@@ -40,11 +41,11 @@ const AddStudent = (props) => {
         <div>
             <div>
                 <span><label>Student name:  </label></span>
-                <span><input name="studentName" type="text" onChange={onChangeHandler}/></span>
+                <span><input name="studentName" type="text" onChange={onChangeHandler} value={studentName}/></span>
             </div>
             <div>
                 <span><label>Phone number:  </label></span>
-                <span><input name="phoneNumber" type="text" onChange={onChangeHandler} /></span>
+                <span><input name="phoneNumber" type="text" onChange={onChangeHandler} value={phoneNumber} /></span>
             </div>
             <div>
                 <span><label></label></span>

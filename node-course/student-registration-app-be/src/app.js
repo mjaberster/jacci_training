@@ -43,7 +43,7 @@ server.post('/students', (req, res) => {
         return
     }
     manipulator.addStudentIfNotExist(student)
-    res.json({message: 'Student has been added successfuly'})
+    res.status(201).json({message: 'Student has been added successfuly'})
 })
 
 server.use((err, req, res, next) => {
@@ -52,7 +52,7 @@ server.use((err, req, res, next) => {
         return
     }
     err.errMessage = (err.message|| "Unknown error!")
-    res.status(err.status || 500).json(err)
+    res.status(err.status || 500).json({err})
     
     next()
 })

@@ -21,6 +21,10 @@ const StudentsList = () => {
     }
 
     const onAddComplete = (data) => {
+        if(data.err) {
+            onErrorHandler({message:data.err.errMessage})
+            return
+        }
         setMessage(data.message)
     }
 
