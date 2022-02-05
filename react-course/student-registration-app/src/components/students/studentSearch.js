@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 const StudentSearch = (props) => {
 
-    const [studentId, setStudentId] = useState("")
+    const [studentNameSearch, setStudentNameSearch] = useState("")
     
-
     const onSearchHandler = (event) => {
         
-       const fetchData = async (studentId) => {
-            await fetch(`http://localhost:3001/students/${studentId}`, {
+       const fetchData = async (studentName) => {
+            await fetch(`http://localhost:3001/students/${studentName}`, {
                 "method": "GET"
             })
             .then(response => {
@@ -21,13 +20,17 @@ const StudentSearch = (props) => {
             })
             }
 
-        fetchData(studentId)
+        fetchData(studentNameSearch)
     }
+
+    
 
     const onTextChange = (event) => {
         let textValue = event.target.value
-        setStudentId(textValue)
+        setStudentNameSearch(textValue)
     }
+
+
 
     return (
 

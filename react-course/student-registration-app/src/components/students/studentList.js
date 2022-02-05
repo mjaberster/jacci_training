@@ -1,30 +1,53 @@
 import React, { useState } from "react"
+import AddStudent from "./addStudent"
 import StudentSearch from "./studentSearch"
 
 const StudentsList = () => {
 
-    const [student, setStudent] = useState({})
-    const [errorMessage, setErrorMessage] = useState("")
+    const [students, setStudents] = useState([])
+    const [message, setMessage] = useState("")
     const onSearchCompleteHandler = (searchResults) => {
         if(!searchResults){
-            setStudent({})
-            setErrorMessage("No search results have been found")
+            setStudents([])
+            setMessage("No search results have been found")
             return
         }
-        setStudent(searchResults)
-        setErrorMessage("")
+        setStudents(searchResults)
+        setMessage("")
+    }
+
+    const onErrorHandler = (error) => {
+        setMessage(error.message)
+    }
+
+    const onAddComplete = (data) => {
+        setMessage(data.message)
     }
 
     return (
 
             <div>
-                <StudentSearch onSearchComplete={onSearchCompleteHandler}/>
-                <ul>
-                    <li>
-                         <span>Student id: {student.studentId}, Student name: {student.studentName}, Phone: {student.phoneNumber} </span>   
-                    </li>
-                </ul>
-                <label>{errorMessage}</label>
+                <div>
+                    <StudentSearch onSearchComplete={onSearchCompleteHandler}/>
+                </div>
+                <div>
+                    <AddStudent onAddComplete={onAddComplete} onError={onErrorHandler}/>
+                </div>
+                <div>
+                    <ul>
+                        {
+                            students.map(s => {
+                                return  <li>
+                                            <span>Student id: {s.studentId}, Student name: {s.studentName}, Phone: {s.phoneNumber} </span>   
+                                        </li>
+                            })
+                        }
+                    </ul>
+                </div>
+                <div>
+                    <label>{message}</label>
+                </div>
+                
             </div>
     )
 }
