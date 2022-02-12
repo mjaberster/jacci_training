@@ -1,0 +1,39 @@
+[
+
+    {
+        "studentId": "086969856",
+        "studentName": "Wajeeh",
+        "phoneNumber": "+972532222222"
+    },
+    {
+        "studentId": "0899685956",
+        "studentName": "Diala",
+        "phoneNumber": "+972532222222"
+    },
+    {
+        "studentId": "087969856",
+        "studentName": "Tasneem",
+        "phoneNumber": "+972532222222"
+    },
+    {
+        "studentId": "086979856",
+        "studentName": "Jaafar",
+        "phoneNumber": "+972532222222"
+    },
+    {
+        "studentId": "036969856",
+        "studentName": "Ezz",
+        "phoneNumber": "+972532222222"
+    },
+    {
+        "studentId": "056569856",
+        "studentName": "Marwan",
+        "phoneNumber": "+972532222222"
+    },
+    {
+        "studentId": "086955856",
+        "studentName": "Ahmad",
+        "phoneNumber": "+972532222222"
+    }
+
+]
