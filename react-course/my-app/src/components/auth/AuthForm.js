@@ -1,5 +1,7 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import React, { useContext, useState} from "react";
 import { useRef } from "react/cjs/react.development";
+import { UserContext } from "../../context/UserContext";
+import './auth.css'
 
 const AuthForm = () => {
 
@@ -7,26 +9,16 @@ const AuthForm = () => {
     const passwordFocusRef = useRef(null);
     const submitFocusRef = useRef(null);
     const [username, setUsername] = useState("Guest")
+    const [password, setPassword] = useState("")
     
-    const [submitClicked, setSubmitClicked] = useState(0)
-    const[submitedmsg, setSubmitedMsg] = useState("");
+    const userContext = useContext(UserContext)
     
-    
-    useEffect(() => {
-        setSubmitedMsg("Submited " + submitClicked);
-    }, [submitClicked])
-
-
-    
-
-    const UserContext = createContext();
-
     return <React.Fragment>
         <form>
         
             <div>
-                <span><label id="usernamelabel">Username:</label></span>
-                <span><input type="text" id="usernamelabel" size="100px;" onMouseOver={
+                <span><label id="usernamelabel" >Username:</label></span>
+                <span><input type="text" id="usernamelabel" size="100px;" placeholder="username" onMouseOver={
                     () => {
                         usernameFocusRef.current.style.backgroundColor = "white"
                         usernameFocusRef.current.style.color = "black"
@@ -71,12 +63,12 @@ const AuthForm = () => {
             onClick={
                 (e) => {
                     e.preventDefault();
-                    setSubmitClicked(submitClicked + 1)
                     setUsername(usernameFocusRef.current.innerHtml)
+                    setPassword(passwordFocusRef.current.innerHtml)
+                    userContext.login()
                 }
             }
             /></div>
-        <label>{submitedmsg}</label>
         </form>
     </React.Fragment>
 }

@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
+import { ThemeContext } from "../../context/ThemeContext"
 import AddStudent from "./addStudent"
 import StudentSearch from "./studentSearch"
 
 const StudentsList = () => {
+
+
 
     const [students, setStudents] = useState([])
     const [message, setMessage] = useState("")
@@ -28,9 +31,18 @@ const StudentsList = () => {
         setMessage(data.message)
     }
 
-    return (
+    const darkTheme = useContext(ThemeContext)
 
-            <div>
+    const themeStyle = {
+        backgroundColor: darkTheme ? `#333` : `#ccc`,
+        color: darkTheme ? `#CCC` : `#333`,
+        padding: `2rem`,
+        margin: `2rem`
+    }
+
+
+    return (
+            <div style={themeStyle}>
                 <div>
                     <StudentSearch onSearchComplete={onSearchCompleteHandler}/>
                 </div>

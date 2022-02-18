@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
+import React, {useState, useCallback} from 'react';
 import AgendaList from './components/agenda-list/AgendaList';
 import Home from './components/Home'
 import data from './components/data/agenda.json';
@@ -8,14 +7,11 @@ import MainNavigation from './components/navigation/MainNavigation';
 import UsersList from './components/users/UsersList';
 import StudentCourseList from './components/course/student-courses';
 import AuthForm from './components/auth/AuthForm';
+import { UserContext } from './context/UserContext';
 
 
 const App = () => {
-  const [count, setCount] = useState(0);
-    useEffect(()=>{
-        setCount(count+1)
-    }, [])
-    
+      
   const [dataState, setAgendaItems] = useState(data);
   const AddNewItem = (item) => {
     
@@ -26,33 +22,46 @@ const App = () => {
     });
   }
 
+  const [isLogedIn, setIsLoggedIn] = useState(false)
 
+  const login = useCallback( ()=> {
+    setIsLoggedIn(true)
+  })
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false)
+  })
+
+  
   return (
     <Router>
+      
         <MainNavigation />
-        <main>
-        <label>{count}</label>
-            <Routes>
-              <Route path="/" element={<Home/>} />
-              <Route path="/course" element={
-                <div>
-                  <AgendaList courseAgendaItems={dataState} onAddItem={AddNewItem}/>
-                </div>
-              } />
-              <Route path="/students" element={
-                <div>
-                  <UsersList />
-                </div>
-              } />
-              <Route path="/student/:studentid" element={
-                <StudentCourseList/>
-              } />
-              <Route path="/auth" element={
-                <AuthForm/>
-              } />
-            
-            </Routes>
-        </main>
+          <main>
+            <UserContext.Provider value={{isLogedIn: isLogedIn, login: login, logout: logout}}>
+                <Routes>
+                  <Route path="/" element={<Home/>} />
+                  <Route path="/course" element={
+                    <div>
+                      <AgendaList courseAgendaItems={dataState} onAddItem={AddNewItem}/>
+                    </div>
+                  } />
+                  <Route path="/students" element={
+                    <div>
+                      <UsersList />
+                    </div>
+                  } />
+                  <Route path="/student/:studentid" element={
+                    <StudentCourseList/>
+                  } />
+                  <Route path="/auth" element={
+                    <AuthForm/>
+                  } />
+                
+                </Routes>
+              </UserContext.Provider>
+          </main>
+        
       </Router>
   );
 }

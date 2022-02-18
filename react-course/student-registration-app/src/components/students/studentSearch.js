@@ -1,9 +1,17 @@
-import React, { useState } from "react"
+import React, { useState, useContext} from "react"
+import { ThemeContext } from "../../context/ThemeContext"
 
 const StudentSearch = (props) => {
 
     const [studentNameSearch, setStudentNameSearch] = useState("")
-    
+    const darkTheme = useContext(ThemeContext)
+    const themeStyle = {
+        backgroundColor: darkTheme ? `#333` : `#ccc`,
+        color: darkTheme ? `#CCC` : `#333`,
+        padding: `2rem`,
+        margin: `2rem`
+    }
+
     const onSearchHandler = (event) => {
         
        const fetchData = async (studentName) => {
@@ -34,7 +42,7 @@ const StudentSearch = (props) => {
 
     return (
 
-            <div>
+            <div style={themeStyle}>
                 <span><input type="text" onChange={onTextChange}/></span>
                 <span><input type="button" value="Search" onClick={onSearchHandler}/></span>
             </div>
