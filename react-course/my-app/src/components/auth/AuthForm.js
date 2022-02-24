@@ -10,6 +10,7 @@ const AuthForm = () => {
     const submitFocusRef = useRef(null);
     const [username, setUsername] = useState("Guest")
     const [password, setPassword] = useState("")
+    const [loginStatusMessage, setLoginStatusMessage] = useState("")
     
     const userContext = useContext(UserContext)
     
@@ -29,7 +30,7 @@ const AuthForm = () => {
                         usernameFocusRef.current.style.backgroundColor = "black"
                         usernameFocusRef.current.style.color = "white"
                     }
-                } ref={usernameFocusRef}/></span>
+                } /></span>
             </div>
             <div>
                 <span><label id="passwordlabel">Password:</label></span>
@@ -61,14 +62,22 @@ const AuthForm = () => {
                 }
             } 
             onClick={
-                (e) => {
+                async (e) => {
                     e.preventDefault();
                     setUsername(usernameFocusRef.current.innerHtml)
                     setPassword(passwordFocusRef.current.innerHtml)
-                    userContext.login()
+                    console.log(username)
+                    console.log(password)
+                    await userContext.login(username, password, userContext)
+                    console.log(`loginResult ${userContext}`);
+                    if(userContext.loginMsg) {
+                        setLoginStatusMessage(userContext.loginMsg)
+                        return
+                    }
                 }
             }
             /></div>
+            <div><span>{loginStatusMessage}</span></div>
         </form>
     </React.Fragment>
 }

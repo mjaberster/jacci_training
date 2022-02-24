@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import NewItem from '../new-item/NewItem';
-import { Link } from 'react-router-dom';
 import AuthForm from "../auth/AuthForm";
 
 const AgendaList = props => {

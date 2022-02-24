@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import AgendaList from './components/agenda-list/AgendaList';
 import Home from './components/Home'
 import data from './components/data/agenda.json';
@@ -8,7 +8,7 @@ import UsersList from './components/users/UsersList';
 import StudentCourseList from './components/course/student-courses';
 import AuthForm from './components/auth/AuthForm';
 import { UserContext } from './context/UserContext';
-
+import { Login, Logout } from './components/auth/login';
 
 const App = () => {
       
@@ -22,23 +22,18 @@ const App = () => {
     });
   }
 
-  const [isLogedIn, setIsLoggedIn] = useState(false)
-
-  const login = useCallback( ()=> {
-    setIsLoggedIn(true)
-  })
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false)
-  })
-
   
   return (
     <Router>
       
         <MainNavigation />
           <main>
-            <UserContext.Provider value={{isLogedIn: isLogedIn, login: login, logout: logout}}>
+            <UserContext.Provider value={{isLogedIn: false,
+                                          token: null,
+                                          loginStatus: null,
+                                          loginMsg: "",
+                                          login: Login,
+                                          logout: Logout}}>
                 <Routes>
                   <Route path="/" element={<Home/>} />
                   <Route path="/course" element={

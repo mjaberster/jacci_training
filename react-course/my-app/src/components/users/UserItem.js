@@ -4,9 +4,7 @@ import './UserItem.css'
 
 const UserItem = props => {
     return <li className="user-item">
-                <span>
-                    <img src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" />
-                </span>
+               
                 <span>
                     <Link to={`/student/${props.user.id}`}>
                         {props.user.name}

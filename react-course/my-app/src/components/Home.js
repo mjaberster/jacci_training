@@ -10,9 +10,7 @@ const Home = () => {
 
     const [value, setValue] = useState("")
     const [getValueFlag, setGetValueFlag] = useState(false)
-    let fromVal;
-    let toVal;
-    let amountVal;
+    
     const getValue = (e) => {
         e.preventDefault();
         setGetValueFlag(true);
