@@ -39,8 +39,8 @@ const getStudent = async (studentId) => {
 }
 
 const addUser = async (user) => {
-
     try{
+        console.log(user.password)
         const hashedPassword = await bcrypt.hash(user.password, 12)
         console.log(hashedPassword)
         const createdUser = new User(
@@ -56,9 +56,9 @@ const addUser = async (user) => {
         console.log(result)
         return result;
     } catch(err) {
-        console.log("Couldn't hash password")
+        console.log(`Failed ${err._message}`)
         console.log(err)
-        throw new Error("Couldn't hash password")
+        throw new Error(`Failed ${err._message}`)
     }
     
 }
@@ -66,13 +66,12 @@ const addUser = async (user) => {
 const getUser = async (username, password) => {
     const user = await User.findOne({username: username}).exec()
     console.log(user)
-    
-    if(!user) {
-        const err = new Error("User is not registered in the system")
-        err.status(404)
-        throw err
-    }
     try{
+        if(!user) {
+            const err = new Error("User is not registered in the system")
+            err.status = 404
+            throw err
+        }
         const isValid = await bcrypt.compare(password, user.password)
         if(!isValid) {
             const err = new Error("Username or password are not correct")

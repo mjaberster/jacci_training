@@ -14,8 +14,6 @@ server.use(express.json())
 
 server.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Origin', '10.0.0.20')
-    res.setHeader('Access-Control-Allow-Origin', '127.0.0.1')
     res.setHeader(
         'Access-Control-Allow-Headers',
         'Origin, X-Requested-With, Content-type, Accept, Authorization'
@@ -24,58 +22,99 @@ server.use((req, res, next) => {
     next()
 })
 
+server.post(`/user/register`, async (req, res) => {
+    const user = req.body
+    const base64Password = user.password
+    let password = Buffer.from(base64Password, 'base64').toString('ascii');
+    console.log(`>>>> ${JSON.stringify(user)}`)
+    if(!user) {
+        const err = new Error("User must be submited")
+        err.status = 400
+        throw err
+    }
+    try{
+        user.password = password
+        const addedUser = await MongooseConnector.addUser(user)
+        if(addedUser) {
+            let token
+            const payload = {
+                userId: user.id,
+                fullName: user.fullName
+            }
+            
+            const options = {
+                expiresIn: '1h'
+            }
+            token = jwt.sign(payload, privateKey, options)
+            res.json({message: "User has been added successfuly", token})
+        } else {
+            res.status(500).json({message: "An error occured, couldn't create user, please try again later"})
+        }
+    } catch(e) {
+        res.status(500).json({message: e.message})
+    }
+})
+
 server.post(`/user/login`, async (req, res) => {
     console.log("login ...")
     const username = req.headers.username
-    const password = req.headers.password
+    const base64Password = req.headers.password
+    console.log(`base64 ${base64Password}`)
+    let password = Buffer.from(base64Password, 'base64').toString('ascii');
+    console.log(`ascii ${password}`)
     console.log(username)
     console.log(password)
     if(!username || !password) {
         res.status(400).json({message: "Username or Password are missing"})
         return
     }
-    const user = await MongooseConnector.getUser(username, password)
-    if(!user) {
-        res.status(401).json({message: "Username or Password are incorrect"})
-        return
-    }
-    let token
-    const payload = {
-        userId: user.id,
-        fullName: user.fullName
-    }
-    
-    const options = {
-        expiresIn: '1h'
-    }
-    token = jwt.sign(payload, privateKey, options)
-
-    res.json({message: "User is loged in", token})
-
-})
-
-server.use((req, res, next) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1] //'Bearer t=TOKEN'
-        if(!token) {
-            const error = new Error("Authentiation failed")
-            error.status = 401
-            return next(error)
+    try{
+        const user = await MongooseConnector.getUser(username, password)
+        if(!user) {
+            res.status(401).json({message: "Username or Password are incorrect"})
+            return
         }
-        const decodedToken = jwt.verify(token, privateKey)
-        req.userData = {
-            userId: decodedToken.userId
-        } 
-        next()
-    } catch(err) {
-        const error = new Error("Authentiation failed")
-        console.log(err)
-        error.status = 401
-        return next(error)
+        let token
+        const payload = {
+            userId: user.id,
+            fullName: user.fullName
+        }
+        
+        const options = {
+            expiresIn: '1h'
+        }
+        token = jwt.sign(payload, privateKey, options)
+
+        res.json({message: "User is loged in", token})
+    } catch (e) {
+        res.status(401).json({message: "Username or Password are incorrect"})
     }
+})
+
+
+
+// server.use((req, res, next) => {
+//     try {
+//         const token = req.headers.authorization.split(' ')[1] //'Bearer t=TOKEN'
+//         if(!token) {
+//             const error = new Error("Authentiation failed")
+//             error.status = 401
+//             return next(error)
+//         }
+//         const decodedToken = jwt.verify(token, privateKey)
+//         req.userData = {
+//             userId: decodedToken.userId
+//         } 
+//         next()
+//     } catch(err) {
+//         const error = new Error("Authentiation failed")
+//         console.log(err)
+//         error.status = 401
+//         return next(error)
+//     }
     
 
-})
+// })
 
 
 server.get('/students', (req, res) => {
@@ -161,24 +200,6 @@ server.get('/students/mongoose/:studentId', async (req, res) => {
     const students = await MongooseConnector.getAllStudents()
     res.json(students)
 })
-
-server.post(`/user/register`, async (req, res) => {
-    const user = req.body
-    if(!user) {
-        const err = new Error("User must be submited")
-        err.status = 400
-        throw err
-    }
-    const addedUser = await MongooseConnector.addUser(user)
-    if(addedUser) {
-        res.json({message: "User has been added successfuly"})
-    } else {
-        res.status(500).json({message: "An error occured, couldn't create user, please try again later"})
-    }
-})
-
-
-
 
 server.use((err, req, res, next) => {
     console.log("error mw")

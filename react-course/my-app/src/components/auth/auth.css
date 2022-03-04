@@ -1,8 +1,12 @@
 * {
 
-    color: white;
+    color: black;
 }
 
 #submitb {
     background-color: black;
+}
+
+#input {
+    color: black;
 }

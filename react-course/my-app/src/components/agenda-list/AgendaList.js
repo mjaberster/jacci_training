@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import NewItem from '../new-item/NewItem';
 import AuthForm from "../auth/AuthForm";
+import SignIn from "../auth/Signin";
 
 const AgendaList = props => {
 
     const userContext = useContext(UserContext)
+    
     if(userContext.isLogedIn) {
         return (
         
@@ -25,7 +27,7 @@ const AgendaList = props => {
     
         );
     } else {
-        return <AuthForm />
+        return <SignIn refresh={props.refresh}/>
     }
 }
 

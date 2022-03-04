@@ -1,13 +1,10 @@
 import React, { useContext, useState} from "react";
-import { useRef } from "react/cjs/react.development";
 import { UserContext } from "../../context/UserContext";
 import './auth.css'
+import { Link } from 'react-router-dom';
 
 const AuthForm = () => {
 
-    const usernameFocusRef = useRef(null);
-    const passwordFocusRef = useRef(null);
-    const submitFocusRef = useRef(null);
     const [username, setUsername] = useState("Guest")
     const [password, setPassword] = useState("")
     const [loginStatusMessage, setLoginStatusMessage] = useState("")
@@ -18,62 +15,31 @@ const AuthForm = () => {
         <form>
         
             <div>
+                <div>
+                    <span>
+                        <Link to="/register">Register</Link>
+                    </span>
+                </div>
                 <span><label id="usernamelabel" >Username:</label></span>
-                <span><input type="text" id="usernamelabel" size="100px;" placeholder="username" onMouseOver={
-                    () => {
-                        usernameFocusRef.current.style.backgroundColor = "white"
-                        usernameFocusRef.current.style.color = "black"
-                    }
-                } 
-                onMouseOut={
-                    () => {
-                        usernameFocusRef.current.style.backgroundColor = "black"
-                        usernameFocusRef.current.style.color = "white"
-                    }
-                } /></span>
+                <span><input type="text" id="usernamelabel" size="100px;" placeholder="username" /></span>
             </div>
             <div>
                 <span><label id="passwordlabel">Password:</label></span>
-                <span><input type="password" id="passwordlabel" size="100px;" onMouseOver={
-                    () => {
-                        passwordFocusRef.current.style.backgroundColor = "white"
-                        passwordFocusRef.current.style.color = "black"
-                    }
-                } 
-                onMouseOut={
-                    () => {
-                        passwordFocusRef.current.style.backgroundColor = "black"
-                        passwordFocusRef.current.style.color = "white"
-                    }
-                } ref={passwordFocusRef}/></span>
+                <span><input type="password" id="passwordlabel" size="100px;" /></span>
             </div>
-            <div><input type="submit" ref={submitFocusRef} id="submitb"
-            
-            onMouseOver={
-                () => {
-                    submitFocusRef.current.style.backgroundColor = "white"
-                    submitFocusRef.current.style.color = "black"
-                }
-            } 
-            onMouseOut={
-                () => {
-                    submitFocusRef.current.style.backgroundColor = "black"
-                    submitFocusRef.current.style.color = "white"
-                }
-            } 
-            onClick={
+            <div><input type="submit" id="submitb" onClick={
                 async (e) => {
                     e.preventDefault();
-                    setUsername(usernameFocusRef.current.innerHtml)
-                    setPassword(passwordFocusRef.current.innerHtml)
-                    console.log(username)
-                    console.log(password)
-                    await userContext.login(username, password, userContext)
-                    console.log(`loginResult ${userContext}`);
-                    if(userContext.loginMsg) {
-                        setLoginStatusMessage(userContext.loginMsg)
-                        return
-                    }
+                    // setUsername(usernameFocusRef.current.innerHtml)
+                    // setPassword(passwordFocusRef.current.innerHtml)
+                    // console.log(username)
+                    // console.log(password)
+                    // await userContext.login(username, password, userContext)
+                    // console.log(`loginResult ${userContext}`);
+                    // if(userContext.loginMsg) {
+                    //     setLoginStatusMessage(userContext.loginMsg)
+                    //     return
+                    // }
                 }
             }
             /></div>

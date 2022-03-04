@@ -1,10 +1,10 @@
 * {
     font-family: 'Courier New', Courier, monospace;
     font-size: xx-large;
-    color: whitesmoke;
+    color: black;
     background-color: black;
 }
-.course-agenda {
+/* .course-agenda {
     list-style: none;
     margin: 2rem 2rem;
     padding: 0;
@@ -24,6 +24,14 @@
     margin: 0rem 0.2rem;
     padding: 0.1rem;
 
+} */
+
+#input {
+    color: black;
+}
+
+#button {
+    background-color: black;
 }
 
 

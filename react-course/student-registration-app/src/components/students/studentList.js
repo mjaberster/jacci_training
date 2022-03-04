@@ -54,7 +54,7 @@ const StudentsList = () => {
                         {
                             students.map(s => {
                                 return  <li>
-                                            <span>Student id: {s.studentId}, Student name: {s.studentName}, Phone: {s.phoneNumber} </span>   
+                                            <span>Student id: {s.id}, Student name: {s.firstname} {s.lastname}, Phone: {s.phonenumber} </span>   
                                         </li>
                             })
                         }
