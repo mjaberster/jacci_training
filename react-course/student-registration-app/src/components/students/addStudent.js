@@ -1,6 +1,6 @@
 import React, {useState} from "react"
-import fbconfig from "../../firebase/config"
-import {collection, addDoc} from 'firebase/firestore/lite';
+import {app} from "../../firebase/config"
+import {collection, addDoc, getFirestore} from 'firebase/firestore';
 
 const AddStudent = (props) => {
 
@@ -29,16 +29,7 @@ const AddStudent = (props) => {
 
     const postData = async (student) => {
 
-        // await fetch(`http://localhost:3001/students/`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(student)
-        // }).then(response => response.json())
-        // .then(data => props.onAddComplete(data))
-
-        const studentsCollection = collection(fbconfig.ProjectFirestore, 'students')
+        const studentsCollection = collection(getFirestore(app), 'students')
         addDoc(studentsCollection, {
             firstname: student.studentName,
             phonenumber: student.phoneNumber

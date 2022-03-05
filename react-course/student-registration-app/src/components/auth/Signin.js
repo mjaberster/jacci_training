@@ -1,22 +1,70 @@
 import React, {useState} from "react";
 import {Form, Card, Button} from 'react-bootstrap'
-import fbconfig from "../../firebase/config"
+import {app} from "../../firebase/config"
+import { getAuth, GoogleAuthProvider, RecaptchaVerifier, signInWithPopup, signInWithPhoneNumber } from "firebase/auth";
 import "./signin.css"
 const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [phoneNumber, setPhonNumber] = useState("")
+    const [OTP, setOTP] = useState("")
 
     function validateForm() {
         return email.length > 0 && password.length > 0;
     }
 
-  function handleSubmit(event) {
+  function handleGoogleLogin(event) {
     event.preventDefault();
+    googleSignIn()
   }
+
+  const handleOtpLogin = (e) =>{
+    e.preventDefault()
+    otpLogin()
+  }
+
+  const generateRecaptcha = (auth) => {
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+        'size': 'invisible',
+        'callback': (response) => {
+
+        }
+    }, auth);
+  }
+
+  const otpLogin = () => {
+    
+    const auth = getAuth(app)
+    auth.useDeviceLanguage()
+    generateRecaptcha(auth)
+    let appVerifier = window.recaptchaVerifier
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+    .then((confirmationResult) => {
+      window.confirmationResult = confirmationResult;
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
+
+  const verifyOtp = (e) => {
+    e.preventDefault()
+    if(OTP.length === 6) {
+        let confirmationResult = window.confirmationResult
+        confirmationResult.confirm(OTP).then((result) => {
+            const user = result.user
+            console.log(user)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+  }
+
     const googleSignIn = () => {
-        fbconfig.signInWithPopup(fbconfig.auth, fbconfig.provider)
+        console.log("googleSignIn")
+        signInWithPopup(getAuth(app), new GoogleAuthProvider())
         .then((result) => {
-            const credential = fbconfig.GoogleAuthProvider.credentialFromResult(result);
+            console.log(result)
+            const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
@@ -25,41 +73,31 @@ const SignIn = () => {
             console.log(user)
          })
         .catch((error) => {
-
             console.log(error)
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The AuthCredential type that was used.
-            const credential = fbconfig.GoogleAuthProvider.credentialFromError(error);
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log(credential)
         })
     }
     return <>
         <div className="Login">
-            <Form onSubmit={handleSubmit}>
-                <Form.Group size="lg" controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                    autoFocus
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group size="lg" controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                </Form.Group>
-                <Button block size="lg" type="submit" disabled={!validateForm()}>
-                Login
+            <Button block size="lg" type="submit" onClick={handleGoogleLogin}>
+                Login With Google
+            </Button>
+        </div>
+        <div>
+            <span><label>Phone: </label></span>
+            <span><input type="text" value={phoneNumber} onChange={(e) => setPhonNumber(e.target.value)} /></span>
+            <span>
+                <Button onClick={handleOtpLogin}>
+                    OTP
                 </Button>
-            </Form>
-    </div>
+            </span>
+        </div>
+        <div>
+            <label>OTP: </label><input type="text" onChange={(e) => setOTP(e.target.value)} />
+            <input type="submit" onClick={verifyOtp} />
+        </div>
+        <div id="recaptcha-container"></div>
     </>
 }
 
